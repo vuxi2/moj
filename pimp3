@@ -1,0 +1,34 @@
+# Inicijalizacija liste kolegija
+lista_kolegija = []
+
+# Učitaj postojeće podatke iz datoteke
+with open("kolegiji.txt", "r", encoding="utf-8") as kolegiji_file:
+predmeti = kolegiji_file.readlines()
+
+
+for element in predmeti:
+
+ociscen_element = element.strip()
+lista_kolegija.append(ociscen_element)
+# Inicijalizacija rječnika za povezivanje informacija o kolegijima
+informacije_o_kolegijima = {}
+
+# Unos informacija za svaki kolegij
+for kolegij in lista_kolegija:
+semestar = input(f"Unesite semestar za kolegij '{kolegij}': ")
+# Dodaj informacije o semestru za svaki kolegij u rječnik
+informacije_o_kolegijima[kolegij] = {"kolegij": kolegij, "semestar": semestar}
+
+# Ispis informacija o kolegijima
+print("Informacije o kolegijima:")
+for kolegij, informacije in informacije_o_kolegijima.items():
+print(f"{informacije['kolegij']}: Semestar {informacije['semestar']}")
+# Pronađi kolegij s najvećim i najmanjim semestrom
+najveci_semestar_kolegij = max(informacije_o_kolegijima, key=lambda k: int(informacije_o_kolegijima[k]["semestar"]))
+najmanji_semestar_kolegij = min(informacije_o_kolegijima, key=lambda k: int(informacije_o_kolegijima[k]["semestar"]))
+
+# Stvaranje nove .txt datoteke
+with open("semestri_info.txt", "w", encoding="utf-8") as semestri_file:
+# Upis informacija o kolegiju s najvećim i najmanjim semestrom
+semestri_file.write(f"Najveći semestar: {najveci_semestar_kolegij}, Semestar: {informacije_o_kolegijima[najveci_semestar_kolegij]['semestar']}\n")
+semestri_file.write(f"Najmanji semestar: {najmanji_semestar_kolegij}, Semestar: {informacije_o_kolegijima[najmanji_semestar_kolegij]['semestar']}")
